@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Void Client</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0f;
+      color: #fff;
+      min-height: 100vh;
+    }
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      position: sticky; top: 0; z-index: 100;
+      backdrop-filter: blur(10px);
+    }
+    .logo {
+      font-size: 22px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #a855f7, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+    .nav-links { display: flex; gap: 12px; align-items: center; }
+    .btn-nav {
+      padding: 9px 22px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      background: transparent;
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.08); }
+    .btn-primary {
+      background: linear-gradient(135deg, #a855f7, #6366f1);
+      color: #fff;
+      border: none;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* Hero */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 20px 80px;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(168,85,247,0.15);
+      border: 1px solid rgba(168,85,247,0.35);
+      color: #c084fc;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 999px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+    h1 {
+      font-size: clamp(48px, 8vw, 88px);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+    }
+    h1 span {
+      background: linear-gradient(135deg, #a855f7, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 18px;
+      color: #94a3b8;
+      max-width: 540px;
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+    .buy-btn {
+      display: inline-block;
+      padding: 18px 52px;
+      background: linear-gradient(135deg, #a855f7, #6366f1);
+      color: #fff;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.25s;
+      box-shadow: 0 0 40px rgba(168,85,247,0.35);
+    }
+    .buy-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 60px rgba(168,85,247,0.5);
+    }
+    .paypal-note {
+      margin-top: 16px;
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    /* Features */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: 0 auto 80px;
+      padding: 0 30px;
+    }
+    .feature-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 28px 24px;
+      transition: border-color 0.2s;
+    }
+    .feature-card:hover { border-color: rgba(168,85,247,0.4); }
+    .feature-icon { font-size: 28px; margin-bottom: 14px; }
+    .feature-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .feature-card p { font-size: 14px; color: #64748b; line-height: 1.6; }
+
+    /* How to buy */
+    .how-to-buy {
+      max-width: 700px;
+      margin: 0 auto 100px;
+      padding: 0 30px;
+      text-align: center;
+    }
+    .how-to-buy h2 {
+      font-size: 32px; font-weight: 800;
+      margin-bottom: 12px; letter-spacing: -0.5px;
+    }
+    .how-to-buy .sub {
+      color: #64748b; font-size: 15px; margin-bottom: 36px;
+    }
+    .steps { display: flex; flex-direction: column; gap: 16px; text-align: left; }
+    .step {
+      display: flex; gap: 18px; align-items: flex-start;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px; padding: 20px 24px;
+    }
+    .step-num {
+      min-width: 36px; height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #a855f7, #6366f1);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 15px;
+    }
+    .step-text h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .step-text p { font-size: 13px; color: #64748b; line-height: 1.6; }
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 30px;
+      text-align: center;
+      font-size: 13px;
+      color: #334155;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">⬛ Void Client</div>
+  <div class="nav-links">
+    <a href="login.html" class="btn-nav btn-outline">Login</a>
+    <a href="register.html" class="btn-nav btn-primary">Sign Up</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="badge">🚀 Minecraft 1.8.9 Client</div>
+  <h1>Dominate With<br><span>Void Client</span></h1>
+  <p>The most powerful, lightweight, and undetectable Minecraft 1.8.9 client. Built for performance. Crafted for winners.</p>
+  <a href="https://discord.gg/rKgUXeR5dX" target="_blank" class="buy-btn">Buy Now</a>
+  <p class="paypal-note">💳 We only accept PayPal via Xoom</p>
+</section>
+
+<div class="features">
+  <div class="feature-card">
+    <div class="feature-icon">⚡</div>
+    <h3>Ultra Low Latency</h3>
+    <p>Optimized rendering pipeline for maximum FPS and zero input delay.</p>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">🛡️</div>
+    <h3>Secure Access</h3>
+    <p>Licensed per user. Activation key system ensures only buyers get in.</p>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">🔄</div>
+    <h3>Regular Updates</h3>
+    <p>Patches dropped frequently. Stay ahead of the competition always.</p>
+  </div>
+  <div class="feature-card">
+    <div class="feature-icon">🎯</div>
+    <h3>Premium Modules</h3>
+    <p>Exclusive features unavailable in any free client on the market.</p>
+  </div>
+</div>
+
+<div class="how-to-buy">
+  <h2>How to Purchase</h2>
+  <p class="sub">Follow these steps to get your copy of Void Client</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text">
+        <h4>Join Our Discord</h4>
+        <p>Click "Buy Now" above to join the official Void Client Discord server.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text">
+        <h4>Open a Ticket</h4>
+        <p>Navigate to the <strong>#buy</strong> channel and create a purchase ticket.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text">
+        <h4>Pay via PayPal (Xoom)</h4>
+        <p>Send payment through PayPal via Xoom. Share your receipt in the ticket.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-text">
+        <h4>Receive Your Key</h4>
+        <p>You'll get a 24-digit activation key. Use it to register on this site and download.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-text">
+        <h4>Register & Download</h4>
+        <p>Create your account with the key, log in, and grab the latest client build.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>© 2025 Void Client. All rights reserved.</footer>
+
+</body>
+</html>
