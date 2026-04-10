@@ -27,27 +27,34 @@
     .welcome-box {
       background:linear-gradient(135deg,rgba(168,85,247,0.12),rgba(99,102,241,0.08));
       border:1px solid rgba(168,85,247,0.2);
-      border-radius:20px; padding:36px 40px; margin-bottom:40px;
+      border-radius:20px; padding:36px 40px; margin-bottom:28px;
     }
     .welcome-box h1 { font-size:26px; font-weight:900; margin-bottom:6px; }
     .welcome-box h1 span { background:linear-gradient(135deg,#a855f7,#6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
     .welcome-box p { color:#64748b; font-size:14px; }
 
-    .section-title { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#64748b; margin-bottom:16px; }
-
-    .patch {
-      background:rgba(255,255,255,0.04);
-      border:1px solid rgba(255,255,255,0.08);
-      border-radius:14px; padding:20px 24px;
-      display:flex; justify-content:space-between; align-items:center;
-      margin-bottom:12px; flex-wrap:wrap; gap:12px;
+    .discord-box {
+      background:rgba(88,101,242,0.1);
+      border:1px solid rgba(88,101,242,0.3);
+      border-radius:16px; padding:24px 28px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:20px; flex-wrap:wrap; margin-bottom:36px;
     }
-    .patch-name { font-size:15px; font-weight:700; margin-bottom:4px; }
-    .patch-date { font-size:12px; color:#64748b; }
-    .patch-badge { padding:3px 10px; border-radius:999px; font-size:11px; font-weight:700; }
-    .badge-latest { background:rgba(168,85,247,0.15); color:#c084fc; border:1px solid rgba(168,85,247,0.3); }
-    .badge-old { background:rgba(255,255,255,0.05); color:#64748b; border:1px solid rgba(255,255,255,0.1); }
+    .discord-left { display:flex; align-items:center; gap:16px; }
+    .discord-icon { font-size:32px; }
+    .discord-text h3 { font-size:16px; font-weight:800; margin-bottom:4px; color:#fff; }
+    .discord-text p { font-size:13px; color:#94a3b8; }
+    .discord-btn {
+      padding:11px 24px;
+      background:linear-gradient(135deg,#5865f2,#4752c4);
+      border:none; border-radius:10px; color:#fff;
+      font-size:14px; font-weight:700; cursor:pointer;
+      font-family:inherit; text-decoration:none; white-space:nowrap;
+      display:inline-block;
+    }
+    .discord-btn:hover { opacity:0.85; }
 
+    .section-title { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#64748b; margin-bottom:16px; }
     .empty { color:#64748b; font-size:14px; padding:20px 0; }
   </style>
 </head>
@@ -66,12 +73,18 @@
 
   <div class="welcome-box">
     <h1>Welcome back, <span id="displayName">...</span> 👋</h1>
-    <p>Download the latest version of Void Client below.</p>
+    <p>You're logged in to Void Client. Join our Discord for all releases and updates.</p>
   </div>
 
-  <p class="section-title">⬇️ Downloads</p>
-  <div id="downloadList">
-    <p class="empty">Loading downloads...</p>
+  <div class="discord-box">
+    <div class="discord-left">
+      <div class="discord-icon">💬</div>
+      <div class="discord-text">
+        <h3>Join the Void Client Discord</h3>
+        <p>All releases, patches, and updates are posted in our Discord server.</p>
+      </div>
+    </div>
+    <a class="discord-btn" href="https://discord.gg/cDHVzy4gx3" target="_blank">Join Discord →</a>
   </div>
 
 </div>
@@ -83,28 +96,6 @@
   document.getElementById("displayName").textContent = displayName;
   document.getElementById("navUsername").textContent = displayName;
   document.getElementById("avatarLetter").textContent = displayName[0].toUpperCase();
-  loadDownloads();
-
-  async function loadDownloads() {
-    const result = await getUploads();
-    const container = document.getElementById("downloadList");
-    if (!result.ok || !result.uploads.length) {
-      container.innerHTML = "<p class='empty'>No downloads available yet.</p>";
-      return;
-    }
-    container.innerHTML = result.uploads.map((u, i) => `
-      <div class="patch">
-        <div>
-          <div class="patch-name">${u.name}</div>
-          <div class="patch-date">${new Date(u.uploadedAt).toLocaleDateString()}</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:12px">
-          ${i === 0 ? '<span class="patch-badge badge-latest">LATEST</span>' : '<span class="patch-badge badge-old">OLDER</span>'}
-          <a href="${u.url}" target="_blank" style="padding:7px 18px;background:linear-gradient(135deg,#a855f7,#6366f1);border-radius:7px;color:#fff;font-size:13px;font-weight:700;text-decoration:none">Download</a>
-        </div>
-      </div>
-    `).join("");
-  }
 
   function logout() {
     sessionStorage.removeItem("void_user");
