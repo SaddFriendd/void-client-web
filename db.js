@@ -1,65 +1,69 @@
-// db.js - GitHub as Database
-const DB_REPO = "SaddFriendd/void-client-db";
-const DB_TOKEN = "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";
-const API = "https://api.github.com";
-
-async function getFile(filename) {
-  const res = await fetch(`${API}/repos/${DB_REPO}/contents/${filename}`, {
-    headers: {
-      Authorization: `token ${DB_TOKEN}`,
-      Accept: "application/vnd.github.v3+json"
-    }
-  });
-  const data = await res.json();
-  const content = atob(data.content.replace(/\n/g, ""));
-  return { data: JSON.parse(content), sha: data.sha };
-}
-
-async function saveFile(filename, content, sha) {
-  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(content, null, 2))));
-  await fetch(`${API}/repos/${DB_REPO}/contents/${filename}`, {
-    method: "PUT",
-    headers: {
-      Authorization: `token ${DB_TOKEN}`,
-      Accept: "application/vnd.github.v3+json",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      message: `update ${filename}`,
-      content: encoded,
-      sha: sha
-    })
-  });
-}
-
-async function getUsers() { return await getFile("users.json"); }
-async function getKeys()  { return await getFile("keys.json");  }
-
-async function validateKey(inputKey) {
-  const { data: keys, sha } = await getKeys();
-  const keyObj = keys.find(k => k.key === inputKey && !k.used);
-  if (!keyObj) return false;
-  // Mark key as used
-  keyObj.used = true;
-  keyObj.usedAt = new Date().toISOString();
-  await saveFile("keys.json", keys, sha);
-  return true;
-}
-
-async function registerUser(username, password) {
-  const { data: users, sha } = await getUsers();
-  if (users.find(u => u.username === username)) return { ok: false, msg: "Username already taken." };
-  users.push({
-    username,
-    password: btoa(password), // basic encoding, not true hashing
-    registeredAt: new Date().toISOString()
-  });
-  await saveFile("users.json", users, sha);
-  return { ok: true };
-}
+const API = "https://void-client-api.insane44gaming.workers.dev";
 
 async function loginUser(username, password) {
-  const { data: users } = await getUsers();
-  const user = users.find(u => u.username === username && u.password === btoa(password));
-  return user ? { ok: true, user } : { ok: false, msg: "Invalid username or password." };
+  const res = await fetch(`${API}/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password })
+  });
+  return await res.json();
+}
+
+async function registerUser(username, password, key) {
+  const res = await fetch(`${API}/register`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ username, password, key })
+  });
+  return await res.json();
+}
+
+async function getUploads() {
+  const res = await fetch(`${API}/uploads`);
+  return await res.json();
+}
+
+async function adminGetUsers(adminPass) {
+  const res = await fetch(`${API}/admin/users`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ adminPass })
+  });
+  return await res.json();
+}
+
+async function adminGetKeys(adminPass) {
+  const res = await fetch(`${API}/admin/keys`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ adminPass })
+  });
+  return await res.json();
+}
+
+async function adminAddKey(adminPass, key) {
+  const res = await fetch(`${API}/admin/addkey`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ adminPass, key })
+  });
+  return await res.json();
+}
+
+async function adminDeleteUser(adminPass, username) {
+  const res = await fetch(`${API}/admin/deleteuser`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ adminPass, username })
+  });
+  return await res.json();
+}
+
+async function adminAddUpload(adminPass, name, version, url) {
+  const res = await fetch(`${API}/admin/uploads`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ adminPass, name, version, url })
+  });
+  return await res.json();
 }
