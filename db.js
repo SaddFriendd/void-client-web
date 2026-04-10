@@ -1,6 +1,6 @@
 // db.js - GitHub as Database
-const DB_REPO = "YOUR_GITHUB_USERNAME/void-client-db";
-const DB_TOKEN = "YOUR_PERSONAL_ACCESS_TOKEN";
+const DB_REPO = "SaddFriendd/void-client-db";
+const DB_TOKEN = "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";
 const API = "https://api.github.com";
 
 async function getFile(filename) {
