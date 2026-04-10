@@ -79,13 +79,11 @@
 <script src="db.js"></script>
 <script>
   const user = JSON.parse(sessionStorage.getItem("void_user"));
-  if (!user) window.location.href = "login.html";
-  else {
-    document.getElementById("displayName").textContent = user.username;
-    document.getElementById("navUsername").textContent = user.username;
-    document.getElementById("avatarLetter").textContent = user.username[0].toUpperCase();
-    loadDownloads();
-  }
+  const displayName = user ? user.username : "Guest";
+  document.getElementById("displayName").textContent = displayName;
+  document.getElementById("navUsername").textContent = displayName;
+  document.getElementById("avatarLetter").textContent = displayName[0].toUpperCase();
+  loadDownloads();
 
   async function loadDownloads() {
     const result = await getUploads();
