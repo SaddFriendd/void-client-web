@@ -1,3 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard – Void Client</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Inter',sans-serif; background:#0a0a0f; color:#fff; min-height:100vh; }
+
+    nav {
+      display:flex; justify-content:space-between; align-items:center;
+      padding:18px 60px;
+      background:rgba(255,255,255,0.03);
+      border-bottom:1px solid rgba(255,255,255,0.07);
+    }
+    .nav-logo { font-size:20px; font-weight:900; background:linear-gradient(135deg,#a855f7,#6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .nav-right { display:flex; align-items:center; gap:14px; }
+    .nav-username { font-size:14px; font-weight:600; color:#94a3b8; }
+    .avatar { width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,#a855f7,#6366f1); display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:800; color:#fff; }
+    .logout-btn { padding:7px 16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#94a3b8; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit; }
+    .logout-btn:hover { background:rgba(255,255,255,0.1); color:#fff; }
+
+    .container { max-width:860px; margin:50px auto; padding:0 30px; }
+
+    .welcome-box {
+      background:linear-gradient(135deg,rgba(168,85,247,0.12),rgba(99,102,241,0.08));
+      border:1px solid rgba(168,85,247,0.2);
+      border-radius:20px; padding:36px 40px; margin-bottom:40px;
+    }
+    .welcome-box h1 { font-size:26px; font-weight:900; margin-bottom:6px; }
+    .welcome-box h1 span { background:linear-gradient(135deg,#a855f7,#6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .welcome-box p { color:#64748b; font-size:14px; }
+
+    .section-title { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#64748b; margin-bottom:16px; }
+
+    .patch {
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(255,255,255,0.08);
+      border-radius:14px; padding:20px 24px;
+      display:flex; justify-content:space-between; align-items:center;
+      margin-bottom:12px; flex-wrap:wrap; gap:12px;
+    }
+    .patch-name { font-size:15px; font-weight:700; margin-bottom:4px; }
+    .patch-date { font-size:12px; color:#64748b; }
+    .patch-badge { padding:3px 10px; border-radius:999px; font-size:11px; font-weight:700; }
+    .badge-latest { background:rgba(168,85,247,0.15); color:#c084fc; border:1px solid rgba(168,85,247,0.3); }
+    .badge-old { background:rgba(255,255,255,0.05); color:#64748b; border:1px solid rgba(255,255,255,0.1); }
+
+    .empty { color:#64748b; font-size:14px; padding:20px 0; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">⬛ Void Client</div>
+  <div class="nav-right">
+    <div class="avatar" id="avatarLetter">?</div>
+    <span class="nav-username" id="navUsername">Loading...</span>
+    <button class="logout-btn" onclick="logout()">Log out</button>
+  </div>
+</nav>
+
+<div class="container">
+
+  <div class="welcome-box">
+    <h1>Welcome back, <span id="displayName">...</span> 👋</h1>
+    <p>Download the latest version of Void Client below.</p>
+  </div>
+
+  <p class="section-title">⬇️ Downloads</p>
+  <div id="downloadList">
+    <p class="empty">Loading downloads...</p>
+  </div>
+
+</div>
+
 <script src="db.js"></script>
 <script>
   const user = JSON.parse(sessionStorage.getItem("void_user"));
@@ -13,7 +91,7 @@
     const result = await getUploads();
     const container = document.getElementById("downloadList");
     if (!result.ok || !result.uploads.length) {
-      container.innerHTML = "<p style='color:#64748b'>No downloads available yet.</p>";
+      container.innerHTML = "<p class='empty'>No downloads available yet.</p>";
       return;
     }
     container.innerHTML = result.uploads.map((u, i) => `
@@ -24,7 +102,7 @@
         </div>
         <div style="display:flex;align-items:center;gap:12px">
           ${i === 0 ? '<span class="patch-badge badge-latest">LATEST</span>' : '<span class="patch-badge badge-old">OLDER</span>'}
-          <a href="${u.url}" download style="padding:7px 18px;background:linear-gradient(135deg,#a855f7,#6366f1);border-radius:7px;color:#fff;font-size:13px;font-weight:700;text-decoration:none">Download</a>
+          <a href="${u.url}" target="_blank" style="padding:7px 18px;background:linear-gradient(135deg,#a855f7,#6366f1);border-radius:7px;color:#fff;font-size:13px;font-weight:700;text-decoration:none">Download</a>
         </div>
       </div>
     `).join("");
@@ -35,3 +113,5 @@
     window.location.href = "login.html";
   }
 </script>
+</body>
+</html>
