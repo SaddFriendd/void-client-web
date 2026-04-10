@@ -1,1 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin – Void Client</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Inter',sans-serif; background:#0a0a0f; color:#fff; min-height:100vh; }
+    .gate {
+      min-height:100vh; display:flex; align-items:center; justify-content:center;
+    }
+    .gate-card {
+      background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.09);
+      border-radius:20px; padding:48px 44px; width:100%; max-width:380px; text-align:center;
+    }
+    .logo { font-size:20px; font-weight:900; background:linear-gradient(135deg,#a855f7,#6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; display:block; margin-bottom:24px; }
+    h2 { font-size:22px; font-weight:800; margin-bottom:6px; }
+    .sub { color:#64748b; font-size:13px; margin-bottom:28px; }
+    input {
+      width:100%; padding:13px 16px; background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.1); border-radius:10px; color:#fff;
+      font-size:15px; font-family:inherit; margin-bottom:16px; outline:none;
+      transition:border-color 0.2s; text-align:center; letter-spacing:3px;
+    }
+    input:focus { border-color:#a855f7; }
+    .btn {
+      width:100%; padding:13px; background:linear-gradient(135deg,#a855f7,#6366f1);
+      border:none; border-radius:10px; color:#fff; font-size:15px; font-weight:700;
+      cursor:pointer; font-family:inherit; transition:opacity 0.2s;
+    }
+    .btn:hover { opacity:0.85; }
 
+    /* Admin panel */
+    #adminPanel { display:none; }
+    nav {
+      display:flex; justify-content:space-between; align-items:center;
+      padding:20px 60px; background:rgba(255,255,255,0.03);
+      border-bottom:1px solid rgba(255,255,255,0.07);
+    }
+    .nav-logo { font-size:20px; font-weight:900; background:linear-gradient(135deg,#a855f7,#6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .admin-badge { padding:5px 14px; background:rgba(168,85,247,0.15); border:1px solid rgba(168,85,247,0.3); border-radius:999px; font-size:12px; font-weight:700; color:#c084fc; }
+    .container { max-width:960px; margin:50px auto; padding:0 30px; }
+    .section-title { font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#64748b; margin-bottom:16px; }
+
+    /* Key generator */
+    .key-box {
+      background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+      border-radius:16px; padding:28px; margin-bottom:40px;
+      display:flex; align-items:center; gap:20px; flex-wrap:wrap;
+    }
+    .generated-key {
+      flex:1; font-family:monospace; font-size:18px; font-weight:700;
+      color:#c084fc; letter-spacing:2px; background:rgba(168,85,247,0.08);
+      border:1px solid rgba(168,85,247,0.2); border-radius:10px;
+      padding:14px 20px; min-width:240px;
+    }
+    .key-actions { display:flex; gap:10px; flex-wrap:wrap; }
+    .action-btn {
+      padding:11px 22px; border-radius:9px; font-size:14px; font-weight:700;
+      cursor:pointer; font-family:inherit; transition:all 0.2s; border:none;
+    }
+    .btn-copy { background:linear-gradient(135deg,#a855f7,#6366f1); color:#fff; }
+    .btn-copy:hover { opacity:0.85; }
+    .btn-new { background:rgba(255,255,255,0.07); color:#94a3b8; border:1px solid rgba(255,255,255,0.1); }
+    .btn-new:hover { background:rgba(255,255,255,0.12); }
+    .copied-msg { font-size:12px; color:#4ade80; font-weight:600; display:none; }
+
+    /* Users table */
+    .table-wrap {
+      background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07);
+      border-radius:16px; overflow:hidden; margin-bottom:40px;
+    }
+    table { width:100%; border-collapse:collapse; }
+    thead { background:rgba(255,255,255,0.05); }
+    th { padding:14px 20px; text-align:left; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#64748b; }
+    td { padding:16px 20px; font-size:14px; border-top:1px solid rgba(255,255,255,0.05); }
+    tr:hover td { background:rgba(255,255,255,0.02); }
+    .status-active { color:#4ade80; font-weight:700; font-size:12px; }
+    .delete-btn {
+      padding:6px 14px; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.2);
+      border-radius:6px; color:#f87171; font-size:12px; font-weight:700;
+      cursor:pointer; font-family:inherit; transition:all 0.2s;
+    }
+    .delete-btn:hover { background:rgba(239,68,68,0.2); }
+
+    /* Keys table */
+    .key-mono { font-family:monospace; font-size:13px; color:#94a3b8; }
+    .used-badge { padding:3px 10px; border-radius:999px; font-size:11px; font-weight:700; }
+    .badge-used { background:rgba(239,68,68,0.1); color:#f87171; border:1px solid rgba(239,68,68,0.2); }
+    .badge-valid { background:rgba(34,197,94,0.1); color:#4ade80; border:1px solid rgba(34,197,94,0.2); }
+
+    .refresh-btn {
+      padding:9px 20px; background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.1); border-radius:8px;
+      color:#94a3b8; font-size:13px; font-weight:600;
+      cursor:pointer; font-family:inherit; margin-bottom:16px;
+      transition:all 0.2s;
+    }
+    .refresh-btn:hover { background:rgba(255,255,255,0.1); }
+  </style>
+</head>
+<body>
+
+<!-- Admin Gate -->
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <span class="logo">⬛ Void Client</span>
+    <h2>Admin Access</h2>
+    <p class="sub">Enter the admin password to continue.</p>
+    <input type="password" id="adminPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkPass()"/>
+    <button class="btn" onclick="checkPass()">Enter</button>
+    <p id="gateErr" style="margin-top:14px;color:#f87171;font-size:13px;display:none;">Wrong password.</p>
+  </div>
+</div>
+
+<!-- Admin Panel -->
+<div id="adminPanel">
+  <nav>
+    <div class="nav-logo">⬛ Void Client</div>
+    <span class="admin-badge">⚡ Admin Panel</span>
+  </nav>
+
+  <div class="container">
+
+    <!-- Key Generator -->
+    <p class="section-title">🔑 Activation Key Generator</p>
+    <div class="key-box">
+      <div class="generated-key" id="currentKey">Click "New Key" to generate</div>
+      <div class="key-actions">
+        <button class="action-btn btn-new" onclick="generateKey()">New Key</button>
+        <button class="action-btn btn-copy" onclick="copyKey()">Copy & Save</button>
+        <span class="copied-msg" id="copiedMsg">✓ Copied & saved to database!</span>
+      </div>
+    </div>
+
+    <!-- Users -->
+    <p class="section-title">👥 Registered Users</p>
+    <button class="refresh-btn" onclick="loadUsers()">↻ Refresh</button>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Username</th>
+            <th>Registered</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="usersTable">
+          <tr><td colspan="5" style="color:#64748b;text-align:center;padding:30px;">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Keys -->
+    <p class="section-title">🗝️ All Activation Keys</p>
+    <button class="refresh-btn" onclick="loadKeys()">↻ Refresh</button>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Key</th>
+            <th>Status</th>
+            <th>Used At</th>
+          </tr>
+        </thead>
+        <tbody id="keysTable">
+          <tr><td colspan="4" style="color:#64748b;text-align:center;padding:30px;">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<script src="db.js"></script>
+<script>
+  // ⚠️ Change this to your admin password
+  const ADMIN_PASSWORD = "YOUR_ADMIN_PASSWORD_HERE";
+
+  function checkPass() {
+    const val = document.getElementById("adminPass").value;
+    if (val === ADMIN_PASSWORD) {
+      document.getElementById("gate").style.display = "none";
+      document.getElementById("adminPanel").style.display = "block";
+      loadUsers();
+      loadKeys();
+      generateKey();
+    } else {
+      document.getElementById("gateErr").style.display = "block";
+    }
+  }
+
+  function generateKeyString() {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    const seg = () => Array.from({length:4}, () => chars[Math.floor(Math.random()*chars.length)]).join("");
+    return `VOID-${seg()}-${seg()}-${seg()}-${seg()}-${seg()}`;
+  }
+
+  let pendingKey = "";
+  function generateKey() {
+    pendingKey = generateKeyString();
+    document.getElementById("currentKey").textContent = pendingKey;
+    document.getElementById("copiedMsg").style.display = "none";
+  }
+
+  async function copyKey() {
+    if (!pendingKey) return;
+    navigator.clipboard.writeText(pendingKey);
+    // Save to DB
+    const { data: keys, sha } = await getKeys();
+    keys.push({ key: pendingKey, used: false, createdAt: new Date().toISOString() });
+    await saveFile("keys.json", keys, sha);
+    document.getElementById("copiedMsg").style.display = "inline";
+    generateKey(); // auto-generate next
+  }
+
+  async function loadUsers() {
+    const tbody = document.getElementById("usersTable");
+    tbody.innerHTML = `<tr><td colspan="5" style="color:#64748b;text-align:center;padding:30px;">Loading...</td></tr>`;
+    const { data: users } = await getUsers();
+    if (!users.length) {
+      tbody.innerHTML = `<tr><td colspan="5" style="color:#64748b;text-align:center;padding:30px;">No users yet.</td></tr>`;
+      return;
+    }
+    tbody.innerHTML = users.map((u, i) => `
+      <tr>
+        <td style="color:#475569">${i+1}</td>
+        <td style="font-weight:600">${u.username}</td>
+        <td style="color:#64748b">${new Date(u.registeredAt).toLocaleDateString()}</td>
+        <td><span class="status-active">● Active</span></td>
+        <td><button class="delete-btn" onclick="deleteUser('${u.username}')">Remove</button></td>
+      </tr>
+    `).join("");
+  }
+
+  async function deleteUser(username) {
+    if (!confirm(`Remove user "${username}"? This cannot be undone.`)) return;
+    const { data: users, sha } = await getUsers();
+    const updated = users.filter(u => u.username !== username);
+    await saveFile("users.json", updated, sha);
+    loadUsers();
+  }
+
+  async function loadKeys() {
+    const tbody = document.getElementById("keysTable");
+    tbody.innerHTML = `<tr><td colspan="4" style="color:#64748b;text-align:center;padding:30px;">Loading...</td></tr>`;
+    const { data: keys } = await getKeys();
+    if (!keys.length) {
+      tbody.innerHTML = `<tr><td colspan="4" style="color:#64748b;text-align:center;padding:30px;">No keys yet.</td></tr>`;
+      return;
+    }
+    tbody.innerHTML = [...keys].reverse().map((k, i) => `
+      <tr>
+        <td style="color:#475569">${keys.length - i}</td>
+        <td class="key-mono">${k.key}</td>
+        <td><span class="used-badge ${k.used ? 'badge-used' : 'badge-valid'}">${k.used ? 'USED' : 'VALID'}</span></td>
+        <td style="color:#64748b">${k.usedAt ? new Date(k.usedAt).toLocaleDateString() : '—'}</td>
+      </tr>
+    `).join("");
+  }
+</script>
+</body>
+</html>
