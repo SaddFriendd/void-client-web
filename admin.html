@@ -1,6 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin – Void Client</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Inter',sans-serif; background:#0a0a0f; color:#fff; min-height:100vh; }
+    .gate { min-height:100vh; display:flex; align-items:center; justify-content:center; }
+    .gate-card { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.09); border-radius:20px; padding:48px 44px; width:100%; max-width:380px; text-align:center; }
+    .logo { font-size:20px; font-weight:900; background:linear-gradient(135deg,#a855f7,#6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; display:block; margin-bottom:24px; }
+    h2 { font-size:22px; font-weight:800; margin-bottom:6px; }
+    .sub { color:#64748b; font-size:13px; margin-bottom:28px; }
+    input { width:100%; padding:13px 16px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:10px; color:#fff; font-size:15px; font-family:inherit; margin-bottom:16px; outline:none; text-align:center; letter-spacing:3px; }
+    input:focus { border-color:#a855f7; }
+    .btn { width:100%; padding:13px; background:linear-gradient(135deg,#a855f7,#6366f1); border:none; border-radius:10px; color:#fff; font-size:15px; font-weight:700; cursor:pointer; font-family:inherit; }
+    .btn:hover { opacity:0.85; }
+    #adminPanel { display:none; }
+    nav { display:flex; justify-content:space-between; align-items:center; padding:20px 60px; background:rgba(255,255,255,0.03); border-bottom:1px solid rgba(255,255,255,0.07); }
+    .nav-logo { font-size:20px; font-weight:900; background:linear-gradient(135deg,#a855f7,#6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .admin-badge { padding:5px 14px; background:rgba(168,85,247,0.15); border:1px solid rgba(168,85,247,0.3); border-radius:999px; font-size:12px; font-weight:700; color:#c084fc; }
+    .container { max-width:960px; margin:50px auto; padding:0 30px; }
+    .section-title { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#64748b; margin-bottom:16px; margin-top:40px; }
+    .key-box { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:28px; display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+    .generated-key { flex:1; font-family:monospace; font-size:18px; font-weight:700; color:#c084fc; letter-spacing:2px; background:rgba(168,85,247,0.08); border:1px solid rgba(168,85,247,0.2); border-radius:10px; padding:14px 20px; min-width:240px; }
+    .key-actions { display:flex; gap:10px; flex-wrap:wrap; }
+    .action-btn { padding:11px 22px; border-radius:9px; font-size:14px; font-weight:700; cursor:pointer; font-family:inherit; border:none; }
+    .btn-copy { background:linear-gradient(135deg,#a855f7,#6366f1); color:#fff; }
+    .btn-new { background:rgba(255,255,255,0.07); color:#94a3b8; border:1px solid rgba(255,255,255,0.1) !important; }
+    .copied-msg { font-size:12px; color:#4ade80; font-weight:600; display:none; }
+    .upload-box { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:28px; display:flex; flex-direction:column; gap:12px; }
+    .upload-box input { margin-bottom:0; text-align:left; letter-spacing:0; }
+    .table-wrap { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:16px; overflow:hidden; }
+    table { width:100%; border-collapse:collapse; }
+    thead { background:rgba(255,255,255,0.05); }
+    th { padding:14px 20px; text-align:left; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#64748b; }
+    td { padding:16px 20px; font-size:14px; border-top:1px solid rgba(255,255,255,0.05); }
+    .status-active { color:#4ade80; font-weight:700; font-size:12px; }
+    .delete-btn { padding:6px 14px; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.2); border-radius:6px; color:#f87171; font-size:12px; font-weight:700; cursor:pointer; font-family:inherit; }
+    .delete-btn:hover { background:rgba(239,68,68,0.2); }
+    .key-mono { font-family:monospace; font-size:13px; color:#94a3b8; }
+    .used-badge { padding:3px 10px; border-radius:999px; font-size:11px; font-weight:700; }
+    .badge-used { background:rgba(239,68,68,0.1); color:#f87171; border:1px solid rgba(239,68,68,0.2); }
+    .badge-valid { background:rgba(34,197,94,0.1); color:#4ade80; border:1px solid rgba(34,197,94,0.2); }
+    .refresh-btn { padding:9px 20px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#94a3b8; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit; margin-bottom:16px; }
+  </style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <span class="logo">⬛ Void Client</span>
+    <h2>Admin Access</h2>
+    <p class="sub">Enter the admin password to continue.</p>
+    <input type="password" id="adminPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkPass()"/>
+    <button class="btn" onclick="checkPass()">Enter</button>
+    <p id="gateErr" style="margin-top:14px;color:#f87171;font-size:13px;display:none;">Wrong password.</p>
+  </div>
+</div>
+
+<div id="adminPanel">
+  <nav>
+    <div class="nav-logo">⬛ Void Client</div>
+    <span class="admin-badge">⚡ Admin Panel</span>
+  </nav>
+  <div class="container">
+
+    <p class="section-title">🔑 Activation Key Generator</p>
+    <div class="key-box">
+      <div class="generated-key" id="currentKey">Click "New Key" to generate</div>
+      <div class="key-actions">
+        <button class="action-btn btn-new" onclick="generateKey()">New Key</button>
+        <button class="action-btn btn-copy" onclick="copyKey()">Copy & Save</button>
+        <span class="copied-msg" id="copiedMsg">✓ Copied & saved!</span>
+      </div>
+    </div>
+
+    <p class="section-title">⬆️ Add Client Download</p>
+    <div class="upload-box">
+      <input type="text" id="uploadName" placeholder="Name (e.g. Void Client v1.1)" style="letter-spacing:0;text-align:left"/>
+      <input type="text" id="uploadVersion" placeholder="Version (e.g. 1.1)" style="letter-spacing:0;text-align:left"/>
+      <input type="text" id="uploadUrl" placeholder="Direct download URL" style="letter-spacing:0;text-align:left"/>
+      <button class="action-btn btn-copy" onclick="uploadVersion()">Add Download</button>
+    </div>
+
+    <p class="section-title">👥 Registered Users</p>
+    <button class="refresh-btn" onclick="loadUsers()">↻ Refresh</button>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Username</th><th>Registered</th><th>Status</th><th>Action</th></tr></thead>
+        <tbody id="usersTable"><tr><td colspan="5" style="color:#64748b;text-align:center;padding:30px">Loading...</td></tr></tbody>
+      </table>
+    </div>
+
+    <p class="section-title">🗝️ All Activation Keys</p>
+    <button class="refresh-btn" onclick="loadKeys()">↻ Refresh</button>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Key</th><th>Status</th><th>Used At</th></tr></thead>
+        <tbody id="keysTable"><tr><td colspan="4" style="color:#64748b;text-align:center;padding:30px">Loading...</td></tr></tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
 <script src="db.js"></script>
 <script>
-  const ADMIN_PASSWORD = "YOUR_ADMIN_PASSWORD";
+  const ADMIN_PASSWORD = "YOUR_ADMIN_PASSWORD_HERE";
 
   function checkPass() {
     const val = document.getElementById("adminPass").value;
@@ -32,8 +140,10 @@
     const result = await adminAddKey(ADMIN_PASSWORD, pendingKey);
     if (result.ok) {
       document.getElementById("copiedMsg").style.display = "inline";
-      generateKey();
       loadKeys();
+      generateKey();
+    } else {
+      alert("Error saving key: " + result.msg);
     }
   }
 
@@ -52,8 +162,7 @@
         <td style="color:#64748b">${new Date(u.registeredAt).toLocaleDateString()}</td>
         <td><span class="status-active">● Active</span></td>
         <td><button class="delete-btn" onclick="deleteUser('${u.username}')">Remove</button></td>
-      </tr>
-    `).join("");
+      </tr>`).join("");
   }
 
   async function deleteUser(username) {
@@ -74,20 +183,26 @@
       <tr>
         <td style="color:#475569">${result.keys.length - i}</td>
         <td class="key-mono">${k.key}</td>
-        <td><span class="used-badge ${k.used ? 'badge-used' : 'badge-valid'}">${k.used ? 'USED' : 'VALID'}</span></td>
+        <td><span class="used-badge ${k.used ? 'badge-used':'badge-valid'}">${k.used?'USED':'VALID'}</span></td>
         <td style="color:#64748b">${k.usedAt ? new Date(k.usedAt).toLocaleDateString() : '—'}</td>
-      </tr>
-    `).join("");
+      </tr>`).join("");
   }
 
-  // Upload new client version
   async function uploadVersion() {
-    const name = document.getElementById("uploadName").value.trim();
+    const name    = document.getElementById("uploadName").value.trim();
     const version = document.getElementById("uploadVersion").value.trim();
-    const url = document.getElementById("uploadUrl").value.trim();
+    const url     = document.getElementById("uploadUrl").value.trim();
     if (!name || !version || !url) return alert("Fill all upload fields.");
     const result = await adminAddUpload(ADMIN_PASSWORD, name, version, url);
-    if (result.ok) { alert("Upload added!"); document.getElementById("uploadName").value=""; document.getElementById("uploadVersion").value=""; document.getElementById("uploadUrl").value=""; }
-    else alert("Error: " + result.msg);
+    if (result.ok) {
+      alert("Download added successfully!");
+      document.getElementById("uploadName").value = "";
+      document.getElementById("uploadVersion").value = "";
+      document.getElementById("uploadUrl").value = "";
+    } else {
+      alert("Error: " + result.msg);
+    }
   }
 </script>
+</body>
+</html>
