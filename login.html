@@ -1,1 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login – Void Client</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0f; color:#fff;
+      min-height:100vh; display:flex;
+      align-items:center; justify-content:center;
+    }
+    .card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 20px; padding: 48px 44px;
+      width:100%; max-width:400px;
+    }
+    .logo {
+      font-size:20px; font-weight:900;
+      background: linear-gradient(135deg,#a855f7,#6366f1);
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      display:block; text-align:center; margin-bottom:28px;
+    }
+    h2 { font-size:26px; font-weight:800; text-align:center; margin-bottom:6px; }
+    .sub { color:#64748b; font-size:14px; text-align:center; margin-bottom:32px; }
+    label { font-size:13px; font-weight:600; color:#94a3b8; display:block; margin-bottom:7px; }
+    input {
+      width:100%; padding:13px 16px;
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:10px; color:#fff;
+      font-size:15px; font-family:inherit;
+      margin-bottom:20px; outline:none;
+      transition:border-color 0.2s;
+    }
+    input:focus { border-color:#a855f7; }
+    .btn {
+      width:100%; padding:14px;
+      background:linear-gradient(135deg,#a855f7,#6366f1);
+      border:none; border-radius:10px;
+      color:#fff; font-size:16px; font-weight:700;
+      cursor:pointer; font-family:inherit;
+      transition:opacity 0.2s,transform 0.2s;
+    }
+    .btn:hover { opacity:0.88; transform:translateY(-1px); }
+    .btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+    .msg { margin-top:18px; text-align:center; font-size:14px; border-radius:8px; padding:12px; display:none; }
+    .msg.error { background:rgba(239,68,68,0.12); color:#f87171; border:1px solid rgba(239,68,68,0.2); display:block; }
+    .msg.success { background:rgba(168,85,247,0.12); color:#c084fc; border:1px solid rgba(168,85,247,0.2); display:block; }
+    .reg-link { text-align:center; margin-top:22px; font-size:13px; color:#64748b; }
+    .reg-link a { color:#a855f7; text-decoration:none; font-weight:600; }
+  </style>
+</head>
+<body>
+<div class="card">
+  <span class="logo">⬛ Void Client</span>
+  <h2>Welcome Back</h2>
+  <p class="sub">Login to access your downloads.</p>
 
+  <label>Username</label>
+  <input type="text" id="username" placeholder="Your username"/>
+
+  <label>Password</label>
+  <input type="password" id="password" placeholder="Your password"/>
+
+  <button class="btn" id="loginBtn" onclick="doLogin()">Login</button>
+  <div class="msg" id="msg"></div>
+  <div class="reg-link">Don't have an account? <a href="register.html">Register</a></div>
+</div>
+
+<script src="db.js"></script>
+<script>
+async function doLogin() {
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value;
+  const btn = document.getElementById("loginBtn");
+
+  if (!username || !password) return showMsg("Fill in all fields.", "error");
+
+  btn.disabled = true; btn.textContent = "Logging in...";
+  const result = await loginUser(username, password);
+
+  if (!result.ok) {
+    btn.disabled = false; btn.textContent = "Login";
+    return showMsg(result.msg, "error");
+  }
+
+  sessionStorage.setItem("void_user", JSON.stringify(result.user));
+  showMsg("Login successful! Redirecting...", "success");
+  setTimeout(() => window.location.href = "dashboard.html", 1500);
+}
+
+function showMsg(text, type) {
+  const el = document.getElementById("msg");
+  el.textContent = text;
+  el.className = "msg " + type;
+}
+</script>
+</body>
+</html>
