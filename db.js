@@ -1,27 +1,6 @@
 const API = "https://void-client-api.insane44gaming.workers.dev";
 
-async function loginUser(username, password) {
-  const res = await fetch(`${API}/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password })
-  });
-  return await res.json();
-}
-
-async function registerUser(username, password, key) {
-  const res = await fetch(`${API}/register`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password, key })
-  });
-  return await res.json();
-}
-
-async function getUploads() {
-  const res = await fetch(`${API}/uploads`);
-  return await res.json();
-}
+// ── Existing endpoints ───────────────────────────────────────────────────────
 
 async function adminGetUsers(adminPass) {
   const res = await fetch(`${API}/admin/users`, {
@@ -50,20 +29,29 @@ async function adminAddKey(adminPass, key) {
   return await res.json();
 }
 
-async function adminDeleteUser(adminPass, username) {
+/**
+ * Delete a registered user by MC username.
+ * The worker will also un-use their key so it can be re-activated.
+ */
+async function adminDeleteUser(adminPass, mcUsername) {
   const res = await fetch(`${API}/admin/deleteuser`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ adminPass, username })
+    body: JSON.stringify({ adminPass, mcUsername })
   });
   return await res.json();
 }
 
-async function adminAddUpload(adminPass, name, version, url) {
-  const res = await fetch(`${API}/admin/uploads`, {
+/**
+ * Fully revoke a key — removes it from keys.json and removes
+ * any user entry bound to it. Use when you want to invalidate
+ * a compromised or shared key.
+ */
+async function adminRevokeKey(adminPass, key) {
+  const res = await fetch(`${API}/admin/revokekey`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ adminPass, name, version, url })
+    body: JSON.stringify({ adminPass, key })
   });
   return await res.json();
 }
