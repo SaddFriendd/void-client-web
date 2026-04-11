@@ -21,33 +21,40 @@
     nav { display:flex; justify-content:space-between; align-items:center; padding:20px 60px; background:rgba(255,255,255,0.03); border-bottom:1px solid rgba(255,255,255,0.07); }
     .nav-logo { font-size:20px; font-weight:900; background:linear-gradient(135deg,#a855f7,#6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
     .admin-badge { padding:5px 14px; background:rgba(168,85,247,0.15); border:1px solid rgba(168,85,247,0.3); border-radius:999px; font-size:12px; font-weight:700; color:#c084fc; }
-    .container { max-width:1050px; margin:50px auto; padding:0 30px; }
+    .container { max-width:1100px; margin:50px auto; padding:0 30px; }
     .section-title { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#64748b; margin-bottom:16px; margin-top:40px; }
     .key-box { background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:28px; display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
     .generated-key { flex:1; font-family:monospace; font-size:18px; font-weight:700; color:#c084fc; letter-spacing:2px; background:rgba(168,85,247,0.08); border:1px solid rgba(168,85,247,0.2); border-radius:10px; padding:14px 20px; min-width:240px; }
     .key-actions { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
     .action-btn { padding:11px 22px; border-radius:9px; font-size:14px; font-weight:700; cursor:pointer; font-family:inherit; border:none; }
     .btn-copy { background:linear-gradient(135deg,#a855f7,#6366f1); color:#fff; }
-    .btn-new { background:rgba(255,255,255,0.07); color:#94a3b8; border:1px solid rgba(255,255,255,0.1) !important; }
+    .btn-new  { background:rgba(255,255,255,0.07); color:#94a3b8; border:1px solid rgba(255,255,255,0.1) !important; }
     .copied-msg { font-size:12px; color:#4ade80; font-weight:600; display:none; }
     .table-wrap { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:16px; overflow:hidden; overflow-x:auto; }
-    table { width:100%; border-collapse:collapse; min-width:700px; }
+    table { width:100%; border-collapse:collapse; min-width:680px; }
     thead { background:rgba(255,255,255,0.05); }
     th { padding:14px 20px; text-align:left; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:#64748b; white-space:nowrap; }
-    td { padding:14px 20px; font-size:13px; border-top:1px solid rgba(255,255,255,0.05); }
-    .status-active { color:#4ade80; font-weight:700; font-size:12px; }
-    .delete-btn { padding:6px 14px; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.2); border-radius:6px; color:#f87171; font-size:12px; font-weight:700; cursor:pointer; font-family:inherit; white-space:nowrap; }
+    td { padding:14px 20px; font-size:13px; border-top:1px solid rgba(255,255,255,0.05); vertical-align:middle; }
+    .delete-btn  { padding:6px 14px; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.2); border-radius:6px; color:#f87171; font-size:12px; font-weight:700; cursor:pointer; font-family:inherit; white-space:nowrap; }
     .delete-btn:hover { background:rgba(239,68,68,0.2); }
-    .key-mono { font-family:monospace; font-size:12px; color:#94a3b8; word-break:break-all; }
-    .pass-mono { font-family:monospace; font-size:12px; color:#fbbf24; }
+    .revoke-btn  { padding:6px 14px; background:rgba(251,146,60,0.1); border:1px solid rgba(251,146,60,0.25); border-radius:6px; color:#fb923c; font-size:12px; font-weight:700; cursor:pointer; font-family:inherit; white-space:nowrap; }
+    .revoke-btn:hover { background:rgba(251,146,60,0.2); }
+    .key-mono  { font-family:monospace; font-size:12px; color:#94a3b8; word-break:break-all; }
+    .mc-name   { font-weight:700; color:#38bdf8; }
     .used-badge { padding:3px 10px; border-radius:999px; font-size:11px; font-weight:700; }
-    .badge-used { background:rgba(239,68,68,0.1); color:#f87171; border:1px solid rgba(239,68,68,0.2); }
+    .badge-used  { background:rgba(239,68,68,0.1); color:#f87171; border:1px solid rgba(239,68,68,0.2); }
     .badge-valid { background:rgba(34,197,94,0.1); color:#4ade80; border:1px solid rgba(34,197,94,0.2); }
     .refresh-btn { padding:9px 20px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:8px; color:#94a3b8; font-size:13px; font-weight:600; cursor:pointer; font-family:inherit; margin-bottom:16px; }
+    .bound-chip { display:inline-block; padding:2px 9px; background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.25); border-radius:999px; font-size:11px; color:#38bdf8; font-weight:700; }
+    .stats-row  { display:flex; gap:16px; flex-wrap:wrap; margin-bottom:36px; }
+    .stat-card  { flex:1; min-width:140px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:14px; padding:20px 24px; }
+    .stat-num   { font-size:28px; font-weight:900; }
+    .stat-label { font-size:12px; color:#64748b; margin-top:4px; }
   </style>
 </head>
 <body>
 
+<!-- ── Gate ──────────────────────────────────────────────────────────────── -->
 <div class="gate" id="gate">
   <div class="gate-card">
     <span class="logo">⬛ Void Client</span>
@@ -59,50 +66,84 @@
   </div>
 </div>
 
+<!-- ── Admin Panel ────────────────────────────────────────────────────────── -->
 <div id="adminPanel">
   <nav>
     <div class="nav-logo">⬛ Void Client</div>
     <span class="admin-badge">⚡ Admin Panel</span>
   </nav>
+
   <div class="container">
 
+    <!-- Stats -->
+    <p class="section-title">📊 Overview</p>
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num" id="statUsers">—</div>
+        <div class="stat-label">Registered Users</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statTotalKeys">—</div>
+        <div class="stat-label">Total Keys</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statValidKeys">—</div>
+        <div class="stat-label">Unused Keys</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statUsedKeys">—</div>
+        <div class="stat-label">Used Keys</div>
+      </div>
+    </div>
+
+    <!-- Key generator -->
     <p class="section-title">🔑 Activation Key Generator</p>
     <div class="key-box">
       <div class="generated-key" id="currentKey">Click "New Key" to generate</div>
       <div class="key-actions">
         <button class="action-btn btn-new" onclick="generateKey()">New Key</button>
-        <button class="action-btn btn-copy" onclick="copyKey()">Copy & Save</button>
-        <span class="copied-msg" id="copiedMsg">✓ Copied & saved!</span>
+        <button class="action-btn btn-copy" onclick="copyKey()">Copy &amp; Save</button>
+        <span class="copied-msg" id="copiedMsg">✓ Copied &amp; saved!</span>
       </div>
     </div>
 
-    <p class="section-title">👥 Registered Users</p>
+    <!-- Registered users -->
+    <p class="section-title">👥 Registered MC Accounts</p>
     <button class="refresh-btn" onclick="loadUsers()">↻ Refresh</button>
     <div class="table-wrap">
       <table>
         <thead>
           <tr>
             <th>#</th>
-            <th>Username</th>
-            <th>Password</th>
+            <th>Minecraft Username</th>
             <th>Key Used</th>
-            <th>Registered</th>
+            <th>Activated</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody id="usersTable">
-          <tr><td colspan="6" style="color:#64748b;text-align:center;padding:30px">Loading...</td></tr>
+          <tr><td colspan="5" style="color:#64748b;text-align:center;padding:30px">Loading...</td></tr>
         </tbody>
       </table>
     </div>
 
+    <!-- All keys -->
     <p class="section-title">🗝️ All Activation Keys</p>
     <button class="refresh-btn" onclick="loadKeys()">↻ Refresh</button>
     <div class="table-wrap">
       <table>
-        <thead><tr><th>#</th><th>Key</th><th>Status</th><th>Used At</th></tr></thead>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Key</th>
+            <th>Status</th>
+            <th>Bound To</th>
+            <th>Used At</th>
+            <th>Action</th>
+          </tr>
+        </thead>
         <tbody id="keysTable">
-          <tr><td colspan="4" style="color:#64748b;text-align:center;padding:30px">Loading...</td></tr>
+          <tr><td colspan="6" style="color:#64748b;text-align:center;padding:30px">Loading...</td></tr>
         </tbody>
       </table>
     </div>
@@ -119,11 +160,18 @@
     if (val === ADMIN_PASSWORD) {
       document.getElementById("gate").style.display = "none";
       document.getElementById("adminPanel").style.display = "block";
-      loadUsers(); loadKeys(); generateKey();
+      loadAll();
     } else {
       document.getElementById("gateErr").style.display = "block";
     }
   }
+
+  async function loadAll() {
+    await Promise.all([loadUsers(), loadKeys()]);
+    generateKey();
+  }
+
+  // ── Key generator ────────────────────────────────────────────────────────
 
   function generateKeyString() {
     const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -151,46 +199,83 @@
     }
   }
 
+  // ── Users table ──────────────────────────────────────────────────────────
+
   async function loadUsers() {
     const tbody = document.getElementById("usersTable");
-    tbody.innerHTML = `<tr><td colspan="6" style="color:#64748b;text-align:center;padding:30px">Loading...</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="5" style="color:#64748b;text-align:center;padding:30px">Loading...</td></tr>`;
     const result = await adminGetUsers(ADMIN_PASSWORD);
+
+    document.getElementById("statUsers").textContent =
+      result.ok ? result.users.length : "—";
+
     if (!result.ok || !result.users.length) {
-      tbody.innerHTML = `<tr><td colspan="6" style="color:#64748b;text-align:center;padding:30px">No users yet.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="5" style="color:#64748b;text-align:center;padding:30px">No registered users yet.</td></tr>`;
       return;
     }
+
     tbody.innerHTML = result.users.map((u, i) => `
       <tr>
-        <td style="color:#475569">${i+1}</td>
-        <td style="font-weight:600">${u.username}</td>
-        <td class="pass-mono">${u.password}</td>
-        <td class="key-mono">${u.keyUsed}</td>
-        <td style="color:#64748b;white-space:nowrap">${new Date(u.registeredAt).toLocaleDateString()}</td>
-        <td><button class="delete-btn" onclick="deleteUser('${u.username}')">Remove</button></td>
+        <td style="color:#475569">${i + 1}</td>
+        <td><span class="mc-name">${u.mcUsername || u.username || "?"}</span></td>
+        <td class="key-mono">${u.keyUsed || "—"}</td>
+        <td style="color:#64748b;white-space:nowrap">${u.activatedAt || u.registeredAt ? new Date(u.activatedAt || u.registeredAt).toLocaleString() : "—"}</td>
+        <td>
+          <button class="delete-btn" onclick="deleteUser('${u.mcUsername || u.username}')">Remove</button>
+        </td>
       </tr>`).join("");
   }
 
-  async function deleteUser(username) {
-    if (!confirm(`Remove "${username}"?`)) return;
-    await adminDeleteUser(ADMIN_PASSWORD, username);
+  async function deleteUser(mcUsername) {
+    if (!confirm(`Remove "${mcUsername}" and release their key?`)) return;
+    await adminDeleteUser(ADMIN_PASSWORD, mcUsername);
     loadUsers();
+    loadKeys(); // refresh because the key is un-used
   }
+
+  // ── Keys table ───────────────────────────────────────────────────────────
 
   async function loadKeys() {
     const tbody = document.getElementById("keysTable");
-    tbody.innerHTML = `<tr><td colspan="4" style="color:#64748b;text-align:center;padding:30px">Loading...</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="6" style="color:#64748b;text-align:center;padding:30px">Loading...</td></tr>`;
     const result = await adminGetKeys(ADMIN_PASSWORD);
+
+    if (result.ok) {
+      const total = result.keys.length;
+      const used  = result.keys.filter(k => k.used).length;
+      document.getElementById("statTotalKeys").textContent = total;
+      document.getElementById("statValidKeys").textContent = total - used;
+      document.getElementById("statUsedKeys").textContent  = used;
+    }
+
     if (!result.ok || !result.keys.length) {
-      tbody.innerHTML = `<tr><td colspan="4" style="color:#64748b;text-align:center;padding:30px">No keys yet.</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="6" style="color:#64748b;text-align:center;padding:30px">No keys yet.</td></tr>`;
       return;
     }
+
     tbody.innerHTML = [...result.keys].reverse().map((k, i) => `
       <tr>
         <td style="color:#475569">${result.keys.length - i}</td>
         <td class="key-mono">${k.key}</td>
-        <td><span class="used-badge ${k.used ? 'badge-used':'badge-valid'}">${k.used?'USED':'VALID'}</span></td>
-        <td style="color:#64748b">${k.usedAt ? new Date(k.usedAt).toLocaleDateString() : '—'}</td>
+        <td><span class="used-badge ${k.used ? 'badge-used' : 'badge-valid'}">${k.used ? 'USED' : 'VALID'}</span></td>
+        <td>${k.boundMcUsername ? `<span class="bound-chip">⛏ ${k.boundMcUsername}</span>` : '<span style="color:#475569">—</span>'}</td>
+        <td style="color:#64748b;white-space:nowrap">${k.usedAt ? new Date(k.usedAt).toLocaleString() : '—'}</td>
+        <td>
+          ${k.used
+            ? `<button class="revoke-btn" onclick="revokeKey('${k.key}', '${k.boundMcUsername || ''}')">Revoke</button>`
+            : '<span style="color:#334155;font-size:12px">—</span>'}
+        </td>
       </tr>`).join("");
+  }
+
+  async function revokeKey(key, boundUser) {
+    const msg = boundUser
+      ? `Revoke key "${key}" and remove user "${boundUser}"?`
+      : `Revoke key "${key}"?`;
+    if (!confirm(msg)) return;
+    await adminRevokeKey(ADMIN_PASSWORD, key);
+    loadUsers();
+    loadKeys();
   }
 </script>
 </body>
