@@ -81,6 +81,51 @@
     .buy-btn:hover { transform: translateY(-3px); box-shadow: 0 0 60px rgba(168,85,247,0.5); }
     .paypal-note { margin-top: 16px; font-size: 13px; color: #64748b; }
 
+    /* ── Price Tag ── */
+    .price-tag {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .price-amount {
+      font-size: 48px;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      background: linear-gradient(135deg, #a855f7, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .price-amount sup {
+      font-size: 22px;
+      vertical-align: super;
+      letter-spacing: 0;
+    }
+    .price-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 3px;
+    }
+    .price-meta span {
+      font-size: 12px;
+      font-weight: 600;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .price-meta .one-time {
+      background: rgba(168,85,247,0.15);
+      border: 1px solid rgba(168,85,247,0.3);
+      color: #c084fc;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
     /* ── Section label ── */
     .section-label {
       text-align: center;
@@ -203,6 +248,16 @@
   <div class="badge">🚀 Minecraft 1.8.9 Client</div>
   <h1>Dominate With<br><span>Void Client</span></h1>
   <p>The most powerful, lightweight, and undetectable Minecraft 1.8.9 client. Built for performance. Crafted for winners.</p>
+
+  <!-- Price Tag -->
+  <div class="price-tag">
+    <div class="price-amount"><sup>$</sup>24.99</div>
+    <div class="price-meta">
+      <span class="one-time">ONE-TIME</span>
+      <span>per account</span>
+    </div>
+  </div>
+
   <a href="https://discord.gg/rKgUXeR5dX" target="_blank" class="buy-btn">Buy Now — Join Discord</a>
   <p class="paypal-note">💳 We only accept PayPal via Xoom &nbsp;·&nbsp; 🔒 Licensed per Minecraft account</p>
 </section>
