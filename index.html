@@ -14,7 +14,6 @@
       color: #fff;
       min-height: 100vh;
     }
-
     /* ── Nav ── */
     nav {
       display: flex;
@@ -38,7 +37,6 @@
     .btn-outline:hover { background: rgba(255,255,255,0.08); }
     .btn-primary { background: linear-gradient(135deg, #a855f7, #6366f1); color: #fff; border: none; }
     .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
-
     /* ── Scam Warning Banner ── */
     .scam-banner {
       background: linear-gradient(90deg, rgba(239,68,68,0.12), rgba(239,68,68,0.06));
@@ -55,7 +53,6 @@
     .scam-banner p { font-size: 13px; color: #fca5a5; line-height: 1.5; }
     .scam-banner strong { color: #f87171; font-weight: 700; }
     .scam-banner a { color: #f87171; font-weight: 700; text-decoration: underline; }
-
     /* ── Hero ── */
     .hero {
       display: flex; flex-direction: column; align-items: center;
@@ -80,7 +77,6 @@
     }
     .buy-btn:hover { transform: translateY(-3px); box-shadow: 0 0 60px rgba(168,85,247,0.5); }
     .paypal-note { margin-top: 16px; font-size: 13px; color: #64748b; }
-
     /* ── Price Tag ── */
     .price-tag {
       display: flex;
@@ -96,11 +92,6 @@
       background: linear-gradient(135deg, #a855f7, #818cf8);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-    }
-    .price-amount sup {
-      font-size: 22px;
-      vertical-align: super;
-      letter-spacing: 0;
     }
     .price-meta {
       display: flex;
@@ -125,105 +116,9 @@
       font-weight: 700;
       letter-spacing: 0.5px;
     }
-
-    /* ── Section label ── */
-    .section-label {
-      text-align: center;
-      font-size: 12px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 2px; color: #a855f7; margin-bottom: 14px;
-    }
-    .section-title {
-      text-align: center; font-size: clamp(26px, 4vw, 36px);
-      font-weight: 900; letter-spacing: -0.5px; margin-bottom: 12px;
-    }
-    .section-sub { text-align: center; color: #64748b; font-size: 15px; margin-bottom: 48px; }
-
-    /* ── Features ── */
-    .features-section { max-width: 1060px; margin: 0 auto 90px; padding: 0 30px; }
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-    }
-    .feature-card {
-      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 16px; padding: 28px 24px; transition: border-color 0.2s, transform 0.2s;
-    }
-    .feature-card:hover { border-color: rgba(168,85,247,0.45); transform: translateY(-3px); }
-    .feature-icon { font-size: 30px; margin-bottom: 14px; }
-    .feature-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
-    .feature-card p { font-size: 13px; color: #64748b; line-height: 1.65; }
-
-    /* ── Stats strip ── */
-    .stats-strip {
-      display: flex; justify-content: center; gap: 0;
-      max-width: 820px; margin: 0 auto 90px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 18px; overflow: hidden;
-    }
-    .stat-item {
-      flex: 1; padding: 30px 20px; text-align: center;
-      border-right: 1px solid rgba(255,255,255,0.07);
-    }
-    .stat-item:last-child { border-right: none; }
-    .stat-num { font-size: 32px; font-weight: 900; background: linear-gradient(135deg,#a855f7,#6366f1); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-    .stat-lbl { font-size: 12px; color: #64748b; margin-top: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-
-    /* ── How to buy ── */
-    .how-to-buy { max-width: 720px; margin: 0 auto 40px; padding: 0 30px; }
-    .steps { display: flex; flex-direction: column; gap: 14px; text-align: left; }
-    .step {
-      display: flex; gap: 18px; align-items: flex-start;
-      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 14px; padding: 20px 24px; transition: border-color 0.2s;
-    }
-    .step:hover { border-color: rgba(168,85,247,0.3); }
-    .step-num {
-      min-width: 36px; height: 36px; border-radius: 50%;
-      background: linear-gradient(135deg, #a855f7, #6366f1);
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 15px; flex-shrink: 0;
-    }
-    .step-text h4 { font-size: 15px; font-weight: 700; margin-bottom: 5px; }
-    .step-text p { font-size: 13px; color: #64748b; line-height: 1.65; }
-    .step-text a { color: #a855f7; font-weight: 700; text-decoration: none; }
-    .step-text a:hover { text-decoration: underline; }
-    .step-text strong { color: #c084fc; }
-
-    /* ── Official warning card ── */
-    .official-card {
-      max-width: 720px; margin: 0 auto 90px; padding: 0 30px;
-    }
-    .official-inner {
-      background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(99,102,241,0.06));
-      border: 1px solid rgba(168,85,247,0.25);
-      border-radius: 16px; padding: 28px 30px;
-      display: flex; gap: 18px; align-items: flex-start;
-    }
-    .official-inner .shield { font-size: 32px; flex-shrink: 0; }
-    .official-inner h3 { font-size: 16px; font-weight: 800; margin-bottom: 8px; color: #c084fc; }
-    .official-inner p { font-size: 13px; color: #94a3b8; line-height: 1.7; }
-    .official-inner strong { color: #e2e8f0; }
-
-    /* ── Footer ── */
-    footer {
-      border-top: 1px solid rgba(255,255,255,0.07);
-      padding: 28px 30px;
-      text-align: center;
-    }
-    .footer-top { font-size: 13px; color: #334155; margin-bottom: 12px; }
-    .cf-badge {
-      display: inline-flex; align-items: center; gap: 7px;
-      background: rgba(249,115,22,0.08); border: 1px solid rgba(249,115,22,0.2);
-      border-radius: 999px; padding: 6px 16px;
-      font-size: 12px; color: #fb923c; font-weight: 600;
-    }
-    .cf-badge img { width: 16px; height: 16px; }
   </style>
 </head>
 <body>
-
 <!-- ── Nav ──────────────────────────────────────────────────────────────── -->
 <nav>
   <div class="logo">⬛ Void Client</div>
@@ -248,18 +143,18 @@
   <div class="badge">🚀 Minecraft 1.8.9 Client</div>
   <h1>Dominate With<br><span>Void Client</span></h1>
   <p>The most powerful, lightweight, and undetectable Minecraft 1.8.9 client. Built for performance. Crafted for winners.</p>
-
-  <!-- Price Tag -->
+  
+  <!-- Updated Price Tag -->
   <div class="price-tag">
-    <div class="price-amount"><sup>$</sup>24.99</div>
+    <div class="price-amount"><sup>$</sup>10</div>
     <div class="price-meta">
-      <span class="one-time">ONE-TIME</span>
-      <span>per account</span>
+      <span class="one-time">MONTHLY</span>
+      <span>or <strong>$30/year</strong></span>
     </div>
   </div>
-
+  
   <a href="https://discord.gg/rKgUXeR5dX" target="_blank" class="buy-btn">Buy Now — Join Discord</a>
-  <p class="paypal-note">💳 We only accept PayPal via Xoom &nbsp;·&nbsp; 🔒 Licensed per Minecraft account</p>
+  <p class="paypal-note">💳 Monthly $10 • Yearly $30 via PayPal (Xoom) &nbsp;·&nbsp; 🔒 Licensed per Minecraft account</p>
 </section>
 
 <!-- ── Stats ──────────────────────────────────────────────────────────────── -->
@@ -287,7 +182,6 @@
   <p class="section-label">Why Void Client</p>
   <h2 class="section-title">Everything You Need to Win</h2>
   <p class="section-sub">Built from scratch for competitive Minecraft PvP on 1.8.9</p>
-
   <div class="features-grid">
     <div class="feature-card">
       <div class="feature-icon">⚡</div>
@@ -337,7 +231,6 @@
   <p class="section-label">Get Started</p>
   <h2 class="section-title">How to Purchase</h2>
   <p class="section-sub">Follow these steps exactly. Only buy through the official Discord.</p>
-
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
@@ -356,8 +249,8 @@
     <div class="step">
       <div class="step-num">3</div>
       <div class="step-text">
-        <h4>Wait for Staff Assistance</h4>
-        <p>An official Void Client staff member will respond to your ticket. They will guide you through the purchase. <strong>Staff will never ask for your password.</strong></p>
+        <h4>Choose Your Plan</h4>
+        <p>Tell the staff whether you want the <strong>$10 Monthly</strong> or <strong>$30 Yearly</strong> plan.</p>
       </div>
     </div>
     <div class="step">
@@ -371,7 +264,7 @@
       <div class="step-num">5</div>
       <div class="step-text">
         <h4>Receive Your Activation Token</h4>
-        <p>After payment is confirmed, you'll receive a unique <strong>one-time activation token</strong>. This token is tied to your Minecraft username permanently.</p>
+        <p>After payment is confirmed, you'll receive a unique <strong>activation token</strong> tied to your Minecraft username.</p>
       </div>
     </div>
     <div class="step">
@@ -414,6 +307,5 @@
     Protected by Cloudflare
   </div>
 </footer>
-
 </body>
 </html>
