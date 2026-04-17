@@ -4,292 +4,171 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Void Client</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       font-family: 'Inter', sans-serif;
       background: #0a0a0f;
       color: #fff;
-      min-height: 100vh;
     }
-    /* ── Nav ── */
+
     nav {
       display: flex;
       justify-content: space-between;
-      align-items: center;
       padding: 20px 60px;
       background: rgba(255,255,255,0.03);
       border-bottom: 1px solid rgba(255,255,255,0.07);
-      position: sticky; top: 0; z-index: 100;
-      backdrop-filter: blur(10px);
     }
+
     .logo {
-      font-size: 22px; font-weight: 900;
-      background: linear-gradient(135deg, #a855f7, #6366f1);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      letter-spacing: -0.5px;
+      font-weight: 900;
+      background: linear-gradient(135deg,#a855f7,#6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-    .nav-links { display: flex; gap: 12px; align-items: center; }
-    .btn-nav { padding: 9px 22px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; transition: all 0.2s; }
-    .btn-outline { border: 1px solid rgba(255,255,255,0.2); color: #fff; background: transparent; }
-    .btn-outline:hover { background: rgba(255,255,255,0.08); }
-    .btn-primary { background: linear-gradient(135deg, #a855f7, #6366f1); color: #fff; border: none; }
-    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
-    /* ── Scam Warning Banner ── */
-    .scam-banner {
-      background: linear-gradient(90deg, rgba(239,68,68,0.12), rgba(239,68,68,0.06));
-      border-bottom: 1px solid rgba(239,68,68,0.25);
-      padding: 12px 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+
+    .btn-nav {
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,0.2);
+      color: white;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg,#a855f7,#6366f1);
+      color: white;
+    }
+
+    .hero {
       text-align: center;
+      padding: 120px 20px;
+    }
+
+    h1 {
+      font-size: 60px;
+      font-weight: 900;
+      margin-bottom: 20px;
+    }
+
+    h1 span {
+      background: linear-gradient(135deg,#a855f7,#818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      color: #94a3b8;
+      margin-bottom: 40px;
+    }
+
+    /* PRICING */
+    .pricing {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 40px;
       flex-wrap: wrap;
     }
-    .scam-banner .warn-icon { font-size: 16px; }
-    .scam-banner p { font-size: 13px; color: #fca5a5; line-height: 1.5; }
-    .scam-banner strong { color: #f87171; font-weight: 700; }
-    .scam-banner a { color: #f87171; font-weight: 700; text-decoration: underline; }
-    /* ── Hero ── */
-    .hero {
-      display: flex; flex-direction: column; align-items: center;
-      justify-content: center; text-align: center; padding: 110px 20px 70px;
+
+    .price-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 30px 40px;
+      min-width: 200px;
     }
-    .badge {
-      display: inline-block;
-      background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.35);
-      color: #c084fc; font-size: 12px; font-weight: 600;
-      padding: 6px 16px; border-radius: 999px; letter-spacing: 1px;
-      text-transform: uppercase; margin-bottom: 28px;
+
+    .price-title {
+      font-size: 14px;
+      color: #a855f7;
+      margin-bottom: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
     }
-    h1 { font-size: clamp(44px, 8vw, 88px); font-weight: 900; line-height: 1.05; letter-spacing: -2px; margin-bottom: 24px; }
-    h1 span { background: linear-gradient(135deg, #a855f7, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .hero p { font-size: 18px; color: #94a3b8; max-width: 560px; line-height: 1.7; margin-bottom: 48px; }
+
+    .price-amount {
+      font-size: 42px;
+      font-weight: 900;
+      margin-bottom: 5px;
+      background: linear-gradient(135deg,#a855f7,#818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .price-sub {
+      font-size: 13px;
+      color: #64748b;
+    }
+
     .buy-btn {
-      display: inline-block; padding: 18px 52px;
-      background: linear-gradient(135deg, #a855f7, #6366f1);
-      color: #fff; font-size: 17px; font-weight: 700; border-radius: 12px;
-      text-decoration: none; transition: all 0.25s;
-      box-shadow: 0 0 40px rgba(168,85,247,0.35);
+      padding: 16px 50px;
+      background: linear-gradient(135deg,#a855f7,#6366f1);
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      display: inline-block;
     }
-    .buy-btn:hover { transform: translateY(-3px); box-shadow: 0 0 60px rgba(168,85,247,0.5); }
-    .paypal-note { margin-top: 16px; font-size: 13px; color: #64748b; }
-      <!-- Price Tag -->
-  <div class="price-tag" style="flex-direction: column; gap: 16px;">
-    
-    <div style="display: flex; gap: 30px; align-items: center; justify-content: center; flex-wrap: wrap;">
-      
-      <!-- Monthly -->
-      <div style="text-align: center;">
-        <div class="price-amount"><sup>$</sup>10</div>
-        <div class="price-meta" style="align-items:center;">
-          <span class="one-time">MONTHLY</span>
-          <span>per account</span>
-        </div>
-      </div>
 
-      <!-- Yearly -->
-      <div style="text-align: center;">
-        <div class="price-amount"><sup>$</sup>30</div>
-        <div class="price-meta" style="align-items:center;">
-          <span class="one-time">YEARLY</span>
-          <span>per account</span>
-        </div>
-      </div>
+    .paypal-note {
+      margin-top: 12px;
+      font-size: 13px;
+      color: #64748b;
+    }
 
-    </div>
+  </style>
+</head>
 
-  </div>
-<!-- ── Nav ──────────────────────────────────────────────────────────────── -->
+<body>
+
 <nav>
-  <div class="logo">⬛ Void Client</div>
-  <div class="nav-links">
-    <a href="login.html" class="btn-nav btn-outline">Login</a>
-    <a href="https://discord.gg/rKgUXeR5dX" target="_blank" class="btn-nav btn-primary">Buy Now</a>
+  <div class="logo">Void Client</div>
+  <div>
+    <a href="#" class="btn-nav btn-outline">Login</a>
+    <a href="https://discord.gg/rKgUXeR5dX" class="btn-nav btn-primary">Buy Now</a>
   </div>
 </nav>
 
-<!-- ── Scam Warning Banner ────────────────────────────────────────────────── -->
-<div class="scam-banner">
-  <span class="warn-icon">⚠️</span>
-  <p>
-    <strong>SCAM ALERT:</strong> This is the <strong>only official Void Client website</strong> and
-    <a href="https://discord.gg/rKgUXeR5dX" target="_blank">discord.gg/rKgUXeR5dX</a> is the <strong>only official Discord server.</strong>
-    Do <strong>not</strong> trust any other websites, sellers, or Discord servers claiming to sell Void Client. You will be scammed.
-  </p>
-</div>
-
-<!-- ── Hero ──────────────────────────────────────────────────────────────── -->
 <section class="hero">
-  <div class="badge">🚀 Minecraft 1.8.9 Client</div>
-  <h1>Dominate With<br><span>Void Client</span></h1>
-  <p>The most powerful, lightweight, and undetectable Minecraft 1.8.9 client. Built for performance. Crafted for winners.</p>
-  
-  <!-- Updated Price Tag -->
-  <div class="price-tag">
-    <div class="price-amount"><sup>$</sup>10</div>
-    <div class="price-meta">
-      <span class="one-time">MONTHLY</span>
-      <span>or <strong>$30/year</strong></span>
+
+  <h1>Dominate With <span>Void Client</span></h1>
+
+  <p>The most powerful, lightweight, and undetectable Minecraft client.</p>
+
+  <!-- NEW PRICING -->
+  <div class="pricing">
+
+    <div class="price-card">
+      <div class="price-title">MONTHLY</div>
+      <div class="price-amount">$10</div>
+      <div class="price-sub">per account / month</div>
     </div>
+
+    <div class="price-card">
+      <div class="price-title">YEARLY</div>
+      <div class="price-amount">$30</div>
+      <div class="price-sub">per account / year</div>
+    </div>
+
   </div>
-  
-  <a href="https://discord.gg/rKgUXeR5dX" target="_blank" class="buy-btn">Buy Now — Join Discord</a>
-  <p class="paypal-note">💳 Monthly $10 • Yearly $30 via PayPal (Xoom) &nbsp;·&nbsp; 🔒 Licensed per Minecraft account</p>
+
+  <a href="https://discord.gg/rKgUXeR5dX" class="buy-btn">
+    Buy Now — Join Discord
+  </a>
+
+  <p class="paypal-note">
+    💳 PayPal (Xoom) · 🔒 Subscription-based access
+  </p>
+
 </section>
 
-<!-- ── Stats ──────────────────────────────────────────────────────────────── -->
-<div class="stats-strip">
-  <div class="stat-item">
-    <div class="stat-num">1.8.9</div>
-    <div class="stat-lbl">Minecraft Version</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">20+</div>
-    <div class="stat-lbl">Premium Modules</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">0ms</div>
-    <div class="stat-lbl">Input Delay</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">100%</div>
-    <div class="stat-lbl">Private Access</div>
-  </div>
-</div>
-
-<!-- ── Features ──────────────────────────────────────────────────────────── -->
-<div class="features-section">
-  <p class="section-label">Why Void Client</p>
-  <h2 class="section-title">Everything You Need to Win</h2>
-  <p class="section-sub">Built from scratch for competitive Minecraft PvP on 1.8.9</p>
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon">⚡</div>
-      <h3>Ultra Low Latency</h3>
-      <p>Optimized rendering pipeline for maximum FPS and zero input delay. Every tick matters.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🛡️</div>
-      <h3>Secure Access</h3>
-      <p>Licensed per Minecraft account. Activation token system ensures only verified buyers can launch.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🔄</div>
-      <h3>Regular Updates</h3>
-      <p>Patches and new features dropped frequently. Stay ahead of the competition, always.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🎯</div>
-      <h3>Premium Modules</h3>
-      <p>Exclusive features unavailable in any free client. Built for serious players only.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🎨</div>
-      <h3>Custom Click GUI</h3>
-      <p>Sleek, fully customizable in-game GUI. Arrange and toggle modules exactly how you want.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">💨</div>
-      <h3>FPS Boost</h3>
-      <p>Aggressive optimization removes client-side bottlenecks. Run smooth even on low-end hardware.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🔒</div>
-      <h3>Account-Locked</h3>
-      <p>Your license is tied to your Minecraft username. No sharing, no leaking. Your key, your client.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🧩</div>
-      <h3>Module HUD</h3>
-      <p>Real-time on-screen display showing your active modules and keybinds at a glance.</p>
-    </div>
-  </div>
-</div>
-
-<!-- ── How to Purchase ────────────────────────────────────────────────────── -->
-<div class="how-to-buy">
-  <p class="section-label">Get Started</p>
-  <h2 class="section-title">How to Purchase</h2>
-  <p class="section-sub">Follow these steps exactly. Only buy through the official Discord.</p>
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-text">
-        <h4>Join the Official Discord</h4>
-        <p>Click <a href="https://discord.gg/rKgUXeR5dX" target="_blank">"Buy Now"</a> above to join the <strong>official</strong> Void Client Discord server. This is the only place to purchase. Do not buy from anywhere else.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-text">
-        <h4>Open a Ticket in #buy</h4>
-        <p>Navigate to the <strong>#buy</strong> channel inside the server and create a purchase ticket. An official staff member will assist you. Do not DM random users.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-text">
-        <h4>Choose Your Plan</h4>
-        <p>Tell the staff whether you want the <strong>$10 Monthly</strong> or <strong>$30 Yearly</strong> plan.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">4</div>
-      <div class="step-text">
-        <h4>Pay via PayPal (Xoom)</h4>
-        <p>Send payment through PayPal via Xoom only. Share your payment receipt inside your ticket as proof of purchase.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">5</div>
-      <div class="step-text">
-        <h4>Receive Your Activation Token</h4>
-        <p>After payment is confirmed, you'll receive a unique <strong>activation token</strong> tied to your Minecraft username.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">6</div>
-      <div class="step-text">
-        <h4>Launch & Activate</h4>
-        <p>Download and launch Void Client. On first launch, enter your token in the activation screen. Done — you're in.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ── Official Notice Card ───────────────────────────────────────────────── -->
-<div class="official-card">
-  <div class="official-inner">
-    <div class="shield">🔰</div>
-    <div>
-      <h3>Official Channels Only — Don't Get Scammed</h3>
-      <p>
-        The <strong>only official website</strong> for Void Client is this page.
-        The <strong>only official Discord</strong> is
-        <a href="https://discord.gg/rKgUXeR5dX" target="_blank" style="color:#a855f7;font-weight:700;">discord.gg/rKgUXeR5dX</a>.
-        <br><br>
-        Beware of fake websites, resellers, cracked versions, and impersonators on Discord.
-        Any other source is <strong>unofficial, unauthorized, and likely a scam.</strong>
-        If you've been scammed, report it in the official Discord immediately.
-      </p>
-    </div>
-  </div>
-</div>
-
-<!-- ── Footer ─────────────────────────────────────────────────────────────── -->
-<footer>
-  <p class="footer-top">© 2025 Void Client. All rights reserved. · <a href="https://discord.gg/rKgUXeR5dX" target="_blank" style="color:#64748b;text-decoration:none;">Official Discord</a></p>
-  <div class="cf-badge">
-    <svg width="16" height="16" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M65.6 45.2C64.2 38.8 58.6 34 52 34c-5.2 0-9.8 2.8-12.4 7C34.4 41.4 30 46.2 30 52c0 6.6 5.4 12 12 12h23c5.5 0 10-4.5 10-10 0-4.2-2.6-7.8-6.4-9.4-.3-.5-.7-.9-1-.4-.4-.5-.6 1 0 1z" fill="#fb923c"/>
-      <path d="M72 50.6c-.2-.1-.4-.1-.6-.1h-.2c.2-1 .3-2 .3-3C71.5 38.5 63 31 52.8 31c-8.2 0-15.2 5-18.2 12.2C32.4 42.4 30 42 27.5 42 21.7 42 17 46.7 17 52.5S21.7 63 27.5 63H71c3.9 0 7-3.1 7-7 0-2.9-1.8-5.5-4.4-6.6-.2-.2-.4-.3-.6-.4z" fill="#fb923c" opacity=".5"/>
-    </svg>
-    Protected by Cloudflare
-  </div>
-</footer>
 </body>
 </html>
